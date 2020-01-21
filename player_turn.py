@@ -41,7 +41,6 @@ class Player:
     #calls card_draw
     def deck_f(self):
         if len(self.curr_hand) < 5:
-            #self.curr_hand, self.deck_list = self.card_draw()
             self.card_draw()
         return self.curr_hand
 
@@ -54,7 +53,6 @@ class Player:
                 for i in range(len(self.discard_list)):
                     self.deck_list.append(self.discard_list[0])
                     self.discard_list.remove(self.discard_list[0])
-                return self.deck_list, self.discard_list
 
             self.curr_hand.append(self.deck_list[0])
             self.deck_list.remove(self.deck_list[0])
@@ -63,13 +61,15 @@ class Player:
     #draw function for action cards
     def action_card_draw(self, active_card):
         for i in range(active_card.card_draw):
+            print('IN DRAW FUNCTION. DRAW # CARDS: ', active_card.card_draw)
             if len(self.deck_list) < 1:
+                print('SHUFFLING')
                 random.shuffle(self.discard_list)
                 for i in range(len(self.discard_list)):
                     self.deck_list.append(self.discard_list[0])
                     self.discard_list.remove(self.discard_list[0])
-                return self.deck_list, self.discard_list
 
+            print('CARD TO BE ADDED: ', self.deck_list[0])
             self.curr_hand.append(self.deck_list[0])
             self.deck_list.remove(self.deck_list[0])
         return self.curr_hand, self.deck_list, self.discard_list

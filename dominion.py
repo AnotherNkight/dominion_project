@@ -1,4 +1,3 @@
-import random
 from player_turn import *
 from itertools import cycle
 
@@ -11,7 +10,7 @@ player 'type' allows specification of which strategy player should use
 Implemented Smithy Big Money strategy variation
 
 ERRORS
-Hand sizes on player for SBM may not always be accurate?
+
 
 ADD
 Analysis of which turns provinces were purchased on
@@ -65,11 +64,16 @@ for active_player in cycle(player_master_list[active_player_index:] + player_mas
 
     #draw starting hand
     active_player.deck_f()
+    print("BEFORE DRAW: ", active_player.curr_hand)
     for i in range(len(active_player.curr_hand)):
         if active_player.curr_hand[i].card_draw != 0:
+            print("ADDITIONAL CARD DRAW: ", active_player.curr_hand[i].card_draw)
             active_card = active_player.curr_hand[i]
             active_player.action_card_draw(active_card)
+            print("CURRENT HAND SIZE: ", len(active_player.curr_hand))
             break
+
+    print("AFTER DRAW: ", active_player.curr_hand)
 
     #set current money to 0
     active_player.curr_money = 0
