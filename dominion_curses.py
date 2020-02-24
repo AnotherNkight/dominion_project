@@ -1,7 +1,7 @@
-from player import *
+from player_turn import *
 from itertools import cycle
 from curses import *
-from try_and_err import *
+from start_board import *
 
 '''
 DONE
