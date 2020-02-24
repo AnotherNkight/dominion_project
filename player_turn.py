@@ -61,15 +61,15 @@ class Player:
     #draw function for action cards
     def action_card_draw(self, active_card):
         for i in range(active_card.card_draw):
-            print('IN DRAW FUNCTION. DRAW # CARDS: ', active_card.card_draw)
+            ##print('IN DRAW FUNCTION. DRAW # CARDS: ', active_card.card_draw)
             if len(self.deck_list) < 1:
-                print('SHUFFLING')
+                ##print('SHUFFLING')
                 random.shuffle(self.discard_list)
                 for i in range(len(self.discard_list)):
                     self.deck_list.append(self.discard_list[0])
                     self.discard_list.remove(self.discard_list[0])
 
-            print('CARD TO BE ADDED: ', self.deck_list[0])
+            ##print('CARD TO BE ADDED: ', self.deck_list[0])
             self.curr_hand.append(self.deck_list[0])
             self.deck_list.remove(self.deck_list[0])
         return self.curr_hand, self.deck_list, self.discard_list
@@ -248,3 +248,36 @@ class Player:
                 print("discard")
 
         return self.curr_money, gold, silver, provinces, duchies, self.curr_hand, self.deck_list, self.discard_list
+
+    def human_ui(self, gold, silver, provinces, duchies, estates,smithy):
+        self.turn = self.turn + 1
+        print("You are on turn ", self.turn)
+        print("your current hand is: ", self.curr_hand)
+        print("your current money: ", self.curr_money)
+        print("What would you like to purchase? (estate, duchy, province, copper, silver, gold, smithy, or discard")
+        x = input()
+        if x == 'estate' or 'duchy' or 'province' or 'copper' or 'silver' or 'gold' or 'smithy' or 'discard':
+            if x == 'estate' and self.curr_money >= 2:
+                self.buy_card(estate.pop())
+                return estates, self.discard_list
+            elif x == 'duchy' and self.curr_money >= 5:
+                self.buy_card(duchies.pop())
+                return duchies, self.discard_list
+            elif x == 'province' and self.curr_money >= 8:
+                self.buy_card(provinces.pop())
+                return provinces, self.discard_list
+            elif x == 'copper' and self.curr_money >= 0:
+                self.buy_card(copper.pop())
+                return copper, self.discard_list
+            elif x == 'silver' and self.curr_money >= 3:
+                self.buy_card(silver.pop())
+                return silver, self.discard_list
+            elif x == 'gold' and self.curr_money >= 6:
+                self.buy_card(gold.pop())
+                return gold, self.discard_list
+            elif x == 'smithy' and self.curr_money >= 4:
+                self.buy_card(smithy.pop())
+                return smithy, self.discard_list
+            elif x == 'discard':
+                self.discard()
+                return self.discard_list, self.curr_hand, self.deck_list
