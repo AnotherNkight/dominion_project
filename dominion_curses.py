@@ -1,4 +1,4 @@
-from player_turn import *
+from player import *
 from itertools import cycle
 from curses import *
 from start_board import *
@@ -38,6 +38,9 @@ player_master_list.append(player_2)
 
 player_3 = Player('3', 0, 'Smithy - BM')
 player_master_list.append(player_3)
+
+player_4 = Player('4', 0, 'human - ui')
+player_master_list.append(player_4)
 
 #after all players have been added to master list. Used to find winner
 winner_list = player_master_list.copy()
@@ -97,6 +100,9 @@ for active_player in cycle(player_master_list[active_player_index:] + player_mas
 
     if active_player.type == 'Smithy - BM':
         active_player.smithy_bm(gold, silver, provinces, duchies, estates, smithy)
+
+    if active_player.type == 'human - ui':
+        active_player.human_ui(gold, silver, provinces, duchies, estates, smithy)
 
 
     ##print("Provinces remaining at the end of player ", active_player, "'s turn: ", len(provinces))

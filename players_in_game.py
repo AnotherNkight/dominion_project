@@ -1,4 +1,4 @@
-from player_turn import *
+from player import *
 
 player_master_list = []
 '''

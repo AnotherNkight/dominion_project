@@ -1,6 +1,6 @@
-from player_turn import *
+from player import *
 from itertools import cycle
-import curses
+from strategies import *
 
 '''
 DONE
@@ -29,13 +29,13 @@ player_master_list = []
 player_1 = Player('1', 0, 'big money')
 player_master_list.append(player_1)
 '''
-player_2 = Player('2', 0, 'big money')
+player_2 = big_money('2')
 player_master_list.append(player_2)
 
-player_3 = Player('3', 0, 'Smithy - BM')
+player_3 = smithy_big_money('3')
 player_master_list.append(player_3)
 
-player_4 = Player('4', 0, 'human - ui')
+player_4 = user('4')
 player_master_list.append(player_4)
 
 #after all players have been added to master list. Used to find winner
@@ -87,22 +87,10 @@ for active_player in cycle(player_master_list[active_player_index:] + player_mas
     active_player.buy_power()
 
     print("Current Hand Size: ", len(active_player.curr_hand))
-
-    #choose player logic & whether human or AI
-
-    if active_player.type == 'big money':
-        active_player.big_money(gold, silver, provinces, duchies, estates)
-
-    if active_player.type == 'Smithy - BM':
-        active_player.smithy_bm(gold, silver, provinces, duchies, estates, smithy)
-
-    if active_player.type == 'human - ui':
-        active_player.human_ui(gold, silver, provinces, duchies, estates, smithy)
-
+    active_player.strategy(gold, silver, provinces, duchies, estates, smithy)
 
     print("Provinces remaining at the end of player ", active_player, "'s turn: ", len(provinces))
     print("END OF PLAYER ", active_player, "'S TURN.\n")
-
     if len(provinces) == 0:
         break
 
