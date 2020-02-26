@@ -1,4 +1,5 @@
 from player import *
+from board_store import *
 
 class big_money(Player):
     def __init__(self, id):
@@ -179,7 +180,7 @@ class user(Player):
         x = input()
         if x == 'estate' or 'duchy' or 'province' or 'copper' or 'silver' or 'gold' or 'smithy' or 'discard':
             if x == 'estate' and self.curr_money >= 2:
-                self.buy_card(estate.pop())
+                self.buy_card(estates.pop())
                 return estates, self.discard_list
             elif x == 'duchy' and self.curr_money >= 5:
                 self.buy_card(duchies.pop())

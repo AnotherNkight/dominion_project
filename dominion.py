@@ -1,6 +1,7 @@
-from player import *
-from itertools import cycle
-from strategies import *
+# from player import *
+# from itertools import cycle
+# from strategies import *
+from play_game import *
 
 '''
 DONE
@@ -10,89 +11,22 @@ Keeps track of which player purchased provinces on which turn and who won the ga
 player 'type' allows specification of which strategy player should use
 Implemented Smithy Big Money strategy variation
 Analysis of which turns provinces were purchased on
+Human Player Strategy
 
 ERRORS
 
 
 ADD
 Analysis of which turns provinces were purchased on
-Human Player UI
+Human Player incorrect input checking
 '''
 
 #Record that it's a new game
 with open("province_tracker.txt", "a") as f:
     f.write("\nNEW GAME \n\n")
 
-
-player_master_list = []
-'''
-player_1 = Player('1', 0, 'big money')
-player_master_list.append(player_1)
-'''
-player_2 = big_money('2')
-player_master_list.append(player_2)
-
-player_3 = smithy_big_money('3')
-player_master_list.append(player_3)
-
-player_4 = user('4')
-player_master_list.append(player_4)
-
-#after all players have been added to master list. Used to find winner
-winner_list = player_master_list.copy()
-
-# board supply
-number_of_provinces = 12
-number_of_duchies = 12
-number_of_estates = 21          #(24 - 3)
-number_of_gold = 30
-number_of_silver = 40
-number_of_copper = 53           #(60 - 7)
-number_of_smithies = 20         #check actual number
-
-#store board stockpiles as lists
-provinces = [Province() for _ in range(number_of_provinces)]
-duchies = [Duchy() for _ in range(number_of_duchies)]
-estates = [Estate() for _ in range(number_of_estates)]
-gold = [Gold() for _ in range(number_of_gold)]
-silver = [Silver() for _ in range(number_of_silver)]
-copper = [Copper() for _ in range(number_of_copper)]
-smithy = [Smithy() for _ in range(number_of_smithies)]
-
-#determine random starting player
-active_player_index = random.randint(0, len(player_master_list))
-
-for active_player in cycle(player_master_list[active_player_index:] + player_master_list[:active_player_index]):
-
-    #display active player
-    print("BEGINNING OF PLAYER ", active_player, "TURN")
-
-    #draw starting hand
-    active_player.deck_f()
-    print("BEFORE DRAW: ", active_player.curr_hand)
-    for i in range(len(active_player.curr_hand)):
-        if active_player.curr_hand[i].card_draw != 0:
-            print("ADDITIONAL CARD DRAW: ", active_player.curr_hand[i].card_draw)
-            active_card = active_player.curr_hand[i]
-            active_player.action_card_draw(active_card)
-            print("CURRENT HAND SIZE: ", len(active_player.curr_hand))
-            break
-
-    print("AFTER DRAW: ", active_player.curr_hand)
-
-    #set current money to 0
-    active_player.curr_money = 0
-
-    #count money in current player's hand
-    active_player.buy_power()
-
-    print("Current Hand Size: ", len(active_player.curr_hand))
-    active_player.strategy(gold, silver, provinces, duchies, estates, smithy)
-
-    print("Provinces remaining at the end of player ", active_player, "'s turn: ", len(provinces))
-    print("END OF PLAYER ", active_player, "'S TURN.\n")
-    if len(provinces) == 0:
-        break
+#execute game
+play_game(player_master_list)
 
 #find winner for more than 2 player game
 for i in range(len(winner_list)):
